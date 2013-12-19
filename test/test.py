@@ -4,6 +4,7 @@ import unittest
 
 import asnames
 
+# DOWNLOADED FROM bgp.potaroo.net/cidr/autnums.html
 asnames_db_file = 'test/asnames.txt'
 
 class ASNamesTest(unittest.TestCase):
@@ -11,6 +12,12 @@ class ASNamesTest(unittest.TestCase):
 		self.db = asnames.ASNamesDB(asnames_db_file)
 	#}}}
 
+	def testMissingFile(self):#{{{
+		with self.assertRaises(IOError):
+			_db = asnames.ASNamesDB('nofile.txt')
+	#}}}
+
+	@unittest.skip('method full2short is private now')
 	def testFullToShortName(self):#{{{
 		string = 'ISI-AS - University of Southern California'
 		short = asnames.full2short(string)
@@ -64,6 +71,7 @@ class ASNamesTest(unittest.TestCase):
 		self.assertEquals(short, asnames.UNKNOWN_SHORT)
 	#}}}
 
+	@unittest.skip('method readline is private now')
 	def testReadLine(self):#{{{
 		line = 'AS5     SYMBOLICS - Symbolics, Inc.'
 		asn, full = asnames.readline(line)
